@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Color Changing Flowers</title>
+    <style>
+        body {
+            background: #f8f8f8;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .container {
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-family: 'Segoe UI', 'Kanit', sans-serif;
+            color: #c2185b;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px #ffc1da, 0 1px 0 #fff;
+            background: linear-gradient(90deg, #ff90bb 30%, #ffc1da 70%);
+            padding: 18px 48px;
+            border-radius: 32px;
+            border: 2px solid #ff4b6e;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 24px rgba(255, 105, 180, 0.12);
+            position: relative;
+        }
+
+        h1::after {
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+        }
+
+        h1::before {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+        }
+
+        .rose-group {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rose {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+        }
+
+        /* Petals */
+        .petal {
+            position: absolute;
+            width: 100px;
+            height: 120px;
+            background: radial-gradient(circle at 60% 40%, #ff4b6e 60%, #c2185b 100%);
+            border-radius: 60% 60% 60% 60% / 70% 70% 60% 60%;
+            opacity: 0.95;
+            z-index: 2;
+            left: 50px;
+            top: 30px;
+            transform: rotate(0deg);
+            box-shadow: 0 2px 8px rgba(200, 30, 91, 0.2);
+        }
+
+        .petal.petal2 {
+            left: 40px;
+            top: 20px;
+            transform: rotate(-25deg) scale(0.95);
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        /* Glass vase */
+        .vase {
+            position: absolute;
+            width: 60px;
+            height: 100px;
+            left: 70px;
+            top: 250px;
+            background: linear-gradient(180deg, rgba(173, 216, 230, 0.5) 60%, rgba(135, 206, 250, 0.3) 100%);
+            border-radius: 30px 30px 40px 40px / 40px 40px 60px 60px;
+            border: 2px solid rgba(135, 206, 250, 0.5);
+            z-index: 10;
+            box-shadow: 0 8px 24px rgba(135, 206, 250, 0.2);
+            overflow: hidden;
+        }
+
+        .vase-reflection {
+            position: absolute;
+            width: 16px;
+            height: 60px;
+            left: 85px;
+            top: 265px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 10px;
+            z-index: 11;
+            pointer-events: none;
+        }
+
+        .rose.rose1 {
+            left: 0;
+            top: 0;
+            position: absolute;
+        }
+
+        .rose.rose2 {
+            left: 120px;
+            top: 40px;
+            position: absolute;
+            transform: scale(0.9) rotate(-8deg);
+        }
+
+        .rose.rose3 {
+            left: 60px;
+            top: 100px;
+            position: absolute;
+            transform: scale(0.85) rotate(10deg);
+        }
+
+        .petal.petal3 {
+            left: 60px;
+            top: 20px;
+            transform: rotate(25deg) scale(0.95);
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        .petal.petal4 {
+            left: 30px;
+            top: 40px;
+            transform: rotate(-45deg) scale(0.85);
+            z-index: 0;
+            opacity: 0.8;
+        }
+
+        .petal.petal5 {
+            left: 70px;
+            top: 40px;
+            transform: rotate(45deg) scale(0.85);
+            z-index: 0;
+            opacity: 0.8;
+        }
+
+        /* Center */
+        .center {
+            position: absolute;
+            width: 60px;
+            height: 70px;
+            background: radial-gradient(circle at 60% 40%, #ff6f91 70%, #c2185b 100%);
+            border-radius: 50% 50% 45% 45% / 60% 60% 50% 50%;
+            left: 70px;
+            top: 50px;
+            z-index: 3;
+            box-shadow: 0 2px 8px rgba(200, 30, 91, 0.2);
+        }
+
+        /* Stem */
+        .stem {
+            position: absolute;
+            width: 16px;
+            height: 160px;
+            background: linear-gradient(to bottom, #388e3c 60%, #2e7d32 100%);
+            left: 92px;
+            top: 120px;
+            border-radius: 8px;
+            z-index: 0;
+        }
+
+        /* Leaves */
+        .leaf {
+            position: absolute;
+            width: 60px;
+            height: 30px;
+            background: linear-gradient(135deg, #43a047 60%, #388e3c 100%);
+            border-radius: 0 60px 30px 60px / 0 30px 30px 60px;
+            top: 180px;
+            left: 40px;
+            transform: rotate(-30deg);
+            z-index: 1;
+        }
+
+        /* Rainbow animation for petals */
+        @keyframes rainbowPetalFade {
+            0% {
+                background: radial-gradient(circle at 60% 40%, #ff4b6e 60%, #c2185b 100%);
+                opacity: 0.8
+            }
+
+            16% {
+                background: radial-gradient(circle at 60% 40%, #ff90bb 60%, #ff4b6e 100%);
+                opacity: 0.4
+            }
+
+            33% {
+                background: radial-gradient(circle at 60% 40%, #ffc1da 60%, #ff90bb 100%);
+                opacity: 0.8
+            }
+
+            50% {
+                background: radial-gradient(circle at 60% 40%, #f8f8e1 60%, #ffc1da 100%);
+                opacity: 0.4
+            }
+
+            66% {
+                background: radial-gradient(circle at 60% 40%, #8accd5 60%, #f8f8e1 100%);
+                opacity: 0.8
+            }
+
+            83% {
+                background: radial-gradient(circle at 60% 40%, #a8f1ff 60%, #8accd5 100%);
+                opacity: 0.4
+            }
+
+            100% {
+                background: radial-gradient(circle at 60% 40%, #ff4b6e 60%, #c2185b 100%);
+                opacity: 0.8
+            }
+        }
+
+        .petal {
+            animation: rainbowPetalFade 6s linear infinite;
+            transition: background 1s linear;
+        }
+
+        .leaf.right {
+            left: 100px;
+            transform: scaleX(-1) rotate(-30deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🌸 ดอกไม้เปลี่ยนสี 🌸</h1>
+        <div class="rose-group" id="roseGroup">
+            <div class="rose rose1">
+                <div class="petal petal1"></div>
+                <div class="petal petal2"></div>
+                <div class="petal petal3"></div>
+                <div class="petal petal4"></div>
+                <div class="petal petal5"></div>
+                <div class="center"></div>
+                <div class="stem"></div>
+                <div class="leaf"></div>
+                <div class="leaf right"></div>
+                <div class="vase"></div>
+                <div class="vase-reflection"></div>
+            </div>
+            <div class="rose rose2">
+                <div class="petal petal1"></div>
+                <div class="petal petal2"></div>
+                <div class="petal petal3"></div>
+                <div class="petal petal4"></div>
+                <div class="petal petal5"></div>
+                <div class="center"></div>
+                <div class="stem"></div>
+                <div class="leaf"></div>
+                <div class="leaf right"></div>
+                <div class="vase"></div>
+                <div class="vase-reflection"></div>
+            </div>
+            <div class="rose rose3">
+                <div class="petal petal1"></div>
+                <div class="petal petal2"></div>
+                <div class="petal petal3"></div>
+                <div class="petal petal4"></div>
+                <div class="petal petal5"></div>
+                <div class="center"></div>
+                <div class="stem"></div>
+                <div class="leaf"></div>
+                <div class="leaf right"></div>
+                <div class="vase"></div>
+                <div class="vase-reflection"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const roses = document.querySelectorAll('.rose');
+        let isDragging = false;
+        let draggedRose = null;
+        let offset = { x: 0, y: 0 };
+
+        roses.forEach(rose => {
+            rose.style.cursor = 'grab';
+            rose.style.transition = 'transform 0.2s cubic-bezier(.4,2,.6,1)';
+
+            rose.addEventListener('mousedown', function (e) {
+                roseClass = rose.classList.value.split(" ")[1]
+                isDragging = true;
+                draggedRose = rose;
+                rose.style.cursor = 'grabbing';
+                const rect = rose.getBoundingClientRect();
+                x = e.clientX - rect.left + (roseClass === "rose1" ? 0 : roseClass === "rose2" ? 100 : 50);
+                y = e.clientY - rect.top + (roseClass === "rose1" ? 0 : roseClass === "rose2" ? 50 : 70);
+                offset.x = x;
+                offset.y = y;
+
+                rose.style.transition = 'none';
+                e.stopPropagation();
+            });
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!isDragging || !draggedRose) return;
+            const parentRect = draggedRose.parentElement.getBoundingClientRect();
+            const x = e.clientX - parentRect.left - offset.x;
+            const y = e.clientY - parentRect.top - offset.y;
+            draggedRose.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        document.addEventListener('mouseup', function () {
+            if (isDragging && draggedRose) {
+                isDragging = false;
+                draggedRose.style.cursor = 'grab';
+                draggedRose.style.transition = 'transform 0.2s cubic-bezier(.4,2,.6,1)';
+                draggedRose = null;
+            }
+        });
+    </script>
+</body>
+
+</html>
